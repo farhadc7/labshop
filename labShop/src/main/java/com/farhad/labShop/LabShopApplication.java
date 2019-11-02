@@ -1,6 +1,7 @@
 package com.farhad.labShop;
 
 import com.farhad.labShop.Service.AddNewOrderService;
+import com.farhad.labShop.View.ExcelUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -15,7 +16,10 @@ public class LabShopApplication {
 
 	@PostConstruct
 	public void init(){
-		orderService.setOrder();
+        ExcelUtil e=new ExcelUtil();
+        e.readWorkbookToJson();
+
+		//orderService.setOrder();
 	}
 
 	public static void main(String[] args) {
