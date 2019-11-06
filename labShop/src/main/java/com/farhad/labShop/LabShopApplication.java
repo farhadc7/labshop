@@ -16,7 +16,7 @@ public class LabShopApplication {
 
 	@PostConstruct
 	public void init(){
-        ExcelUtil e=new ExcelUtil();
+        ExcelUtil e=ExcelUtil.getExcelUtil("D:\\java\\1.gitHub\\labshop\\labShop\\src\\main\\resources\\labshop.xlsx");
         e.readWorkbookToJson();
 
 		//orderService.setOrder();
