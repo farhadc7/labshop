@@ -1,6 +1,7 @@
 package com.farhad.labShop;
 
 import com.farhad.labShop.Service.AddNewOrderService;
+import com.farhad.labShop.Service.CoreService;
 import com.farhad.labShop.View.ExcelUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -13,11 +14,12 @@ import javax.annotation.PostConstruct;
 public class LabShopApplication {
 	@Autowired
 	AddNewOrderService orderService;
+	@Autowired
+	CoreService coreService;
 
 	@PostConstruct
 	public void init(){
-        ExcelUtil e=ExcelUtil.getExcelUtil("D:\\java\\1.gitHub\\labshop\\labShop\\src\\main\\resources\\labshop.xlsx");
-        e.readWorkbookToJson();
+        coreService.jsonToModel();
 
 		//orderService.setOrder();
 	}

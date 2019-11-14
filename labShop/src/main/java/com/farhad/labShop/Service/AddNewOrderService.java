@@ -9,7 +9,7 @@ import com.farhad.labShop.entity.ProductUnit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Service
 public class AddNewOrderService {
@@ -24,9 +24,9 @@ public class AddNewOrderService {
     }
 
     public void setOrder(){
-        order=new Order(2l,LocalDateTime.now(), PaymentType.cash, "20","1500");
+        order=new Order(2l, LocalDate.now(), PaymentType.cash, "20","1500");
         order.setOrderDiscount("88");
-        DetailOrder detailOrder1=new DetailOrder(11l, ProductUnit.ADDAD,3,"230","0","690");
+       // DetailOrder detailOrder1=new DetailOrder(11l, ProductUnit.ADDAD,3,new "230","0","690");
         detailOrder1.setOrder(order);
         order.getDetailOrders().add(detailOrder1);
         orderRepository.save(order);

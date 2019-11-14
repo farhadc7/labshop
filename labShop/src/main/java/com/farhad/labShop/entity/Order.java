@@ -1,21 +1,19 @@
 package com.farhad.labShop.entity;
-
 import com.sun.istack.NotNull;
-
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name= "order_tbl")
-public class Order {
+public class Order implements Tables {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long orderId;
     @NotNull
     private Long supplierId;
-    private LocalDateTime date;
+    private LocalDate date;
     private PaymentType paymentType;
     private String orderDiscount;
     private String totalPrice;
@@ -23,7 +21,7 @@ public class Order {
     private List<DetailOrder> detailOrders =new ArrayList<>();
 
 
-    public Order(Long supplierId, LocalDateTime date, PaymentType paymentType, String orderDiscount, String totalPrice) {
+    public Order(Long supplierId, LocalDate date, PaymentType paymentType, String orderDiscount, String totalPrice) {
         this.supplierId = supplierId;
         this.date = date;
         this.paymentType = paymentType;
@@ -51,11 +49,11 @@ public class Order {
         this.supplierId = supplierId;
     }
 
-    public LocalDateTime getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(LocalDateTime date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
