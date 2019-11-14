@@ -2,10 +2,11 @@ package com.farhad.labShop.entity;
 
 
 import javax.persistence.*;
+import java.math.BigInteger;
 
 @Entity
 @Table(name = "detailOrder_tbl")
-public class DetailOrder {
+public class DetailOrder implements Tables{
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
@@ -16,10 +17,10 @@ public class DetailOrder {
     @Column(nullable = false)
     private int quantity;
     @Column(nullable = false)
-    private String fee;
-    private String discount;
+    private BigInteger fee;
+    private BigInteger discount;
     @Column(nullable = false)
-    private String price;
+    private BigInteger price;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name ="order_id", nullable = false)
@@ -28,7 +29,7 @@ public class DetailOrder {
     public DetailOrder() {
     }
 
-    public DetailOrder(Long productId, ProductUnit unit, int quantity, String fee, String discount, String price) {
+    public DetailOrder(Long productId, ProductUnit unit, int quantity, BigInteger fee, BigInteger discount, BigInteger price) {
         this.productId = productId;
         this.unit = unit;
         this.quantity = quantity;
@@ -70,27 +71,27 @@ public class DetailOrder {
         this.quantity = quantity;
     }
 
-    public String getFee() {
+    public BigInteger getFee() {
         return fee;
     }
 
-    public void setFee(String fee) {
+    public void setFee(BigInteger fee) {
         this.fee = fee;
     }
 
-    public String getDiscount() {
+    public BigInteger getDiscount() {
         return discount;
     }
 
-    public void setDiscount(String discount) {
+    public void setDiscount(BigInteger discount) {
         this.discount = discount;
     }
 
-    public String getPrice() {
+    public BigInteger getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(BigInteger price) {
         this.price = price;
     }
 

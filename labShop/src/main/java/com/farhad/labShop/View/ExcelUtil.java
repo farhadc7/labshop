@@ -1,17 +1,11 @@
 package com.farhad.labShop.View;
 
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.gson.JsonObject;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.ss.util.CellRangeAddress;
-import org.apache.poi.ss.util.CellRangeAddressBase;
-import org.apache.poi.ss.util.cellwalk.CellWalk;
-import org.apache.poi.ss.util.cellwalk.CellWalkContext;
 import org.apache.poi.xssf.usermodel.*;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -44,7 +38,7 @@ public class ExcelUtil {
 
      /*excel cell should not be empty otherwise iterator will skip it.*/
 
-    public Map<String,JsonObject> readWorkbookToJson(){
+    public Map<String,ArrayNode> readWorkbookToJson(){
         XSSFWorkbook workbook=openWorkbook();
         XSSFSheet sheet=workbook.getSheet("detailorder"); //1
         List<List<String>> allData=new ArrayList<>();
@@ -71,7 +65,7 @@ public class ExcelUtil {
                             break;
                         case BOOLEAN: rowInList.add(Boolean.toString(cell.getBooleanCellValue()));
                             break;
-                        case FORMULA: rowInList.add(cell.getCellFormula());
+                        case FORMULA: rowInList.add(cell.getStringCellValue());
                             break;
                         default: rowInList.add("2564");
                     }
@@ -81,7 +75,7 @@ public class ExcelUtil {
             tablesInMap.put(tbl.getName(), tableInlist);
         });
 
-        Map<String ,JsonObject> jsonTables=new HashMap<>();
+        Map<String ,ArrayNode> jsonTables=new HashMap<>();
         tablesInMap.forEach((k,v) -> jsonTables.put(k,toJson(v)));
         return jsonTables;
     }
@@ -103,16 +97,21 @@ public class ExcelUtil {
         return workbook;
     }
 
-    private JsonObject toJson(List<List<String>> list){
-        JsonObject allOjjects=new JsonObject();
+    private ArrayNode toJson(List<List<String>> list){
+        JsonObject allObjects=new JsonObject();
+        ObjectMapper mapper=new ObjectMapper();
+        ArrayNode allNodes= mapper.createArrayNode();
         for(int i=1; i<list.size(); i++){
             JsonObject rowObject= new JsonObject();
+            ObjectNode node= mapper.createObjectNode();
             for(int j=0; j< list.get(0).size(); j++){
                 rowObject.addProperty(list.get(0).get(j), list.get(i).get(j));
+                node.put(list.get(0).get(j), list.get(i).get(j));
             }
-            allOjjects.add("row "+i, rowObject);
+            allObjects.add(i+"", rowObject);
+            allNodes.add(node);
         }
-        System.out.println(allOjjects);
-        return allOjjects;
+        //System.out.println(allNodes);
+        return allNodes;
     }
 }
